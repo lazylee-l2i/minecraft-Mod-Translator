@@ -22,7 +22,7 @@ class JsonExporter:
             zip_path = file.replace("mod", "translated_mod")
             if zip_path in self.translated_list:
                 continue
-            zip_path.replace(".jar", "_korean.jar")
+            zip_path = zip_path.replace(".jar", "_korean.jar")
             shutil.copy(file, zip_path)
             self.oneFile(zip_path)
 
