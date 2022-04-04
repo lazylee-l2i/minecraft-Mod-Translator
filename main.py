@@ -22,7 +22,7 @@ class JsonExporter:
             if zip_path in self.translated_list:
                 continue
             zip_path = zip_path.replace(".jar", "_korean.jar")
-            shutil.copy(file, zip_path.replace(".jar", "_korean.jar"))
+            shutil.copy(file, zip_path)
             self.oneFile(zip_path)
 
     def postProcessing(self, _file :str="jar_file"):
