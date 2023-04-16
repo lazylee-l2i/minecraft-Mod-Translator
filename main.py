@@ -12,9 +12,11 @@ class JsonExporter:
         self.translator = googletrans.Translator()
 
     def oneFile(self, _file):
-        json_file, lang_path = self.postProcessing(_file=_file)
-        result_json = self.translate(_json_data=json_file)
-        self.saveJar(result_json, _file, lang_path)
+        result = self.postProcessing(_file=_file)
+        if result is not None:
+            json_file, lang_path = result
+            result_json = self.translate(_json_data=json_file)
+            self.saveJar(result_json, _file, lang_path)
 
     def allFile(self):
         for file in self.mod_list:
