@@ -2,7 +2,7 @@ import zipfile
 from pathlib import Path
 import shutil
 import commentjson
-from Translator import do_translate_gpt
+from translator import do_translate_gpt
 
 def jsonJarManager(jar_path: str, logger=None):
     """

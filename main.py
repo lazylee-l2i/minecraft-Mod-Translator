@@ -10,10 +10,10 @@ def TIME_STAMP():
 
 def run():
     # Logger On
-    if Path('./log').exists:
+    if Path('./log').exists():
         pass
     else:
-        Path('.log').mkdir()
+        Path('./log').mkdir()
     
     s = TIME_STAMP()
     
