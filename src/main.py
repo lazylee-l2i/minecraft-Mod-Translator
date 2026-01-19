@@ -12,7 +12,7 @@ Features:
     - Tkinter GUI
     - Resource Pack 생성
 """
-from .ui.main_window import MainWindow
+from src.ui.main_window import MainWindow
 
 
 def main() -> None:

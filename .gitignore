@@ -145,3 +145,6 @@ temp/
 # Keep reference papers for development
 # ReferencePaper/
 ReferencePaper/How to make translated mod pack.txt
+
+# Build files
+Release/

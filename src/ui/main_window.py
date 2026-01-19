@@ -5,20 +5,20 @@ import threading
 from pathlib import Path
 from typing import Optional, List
 
-from .styles import configure_styles, Colors, Spacing
-from .components.llm_config_panel import LLMConfigPanel
-from .components.version_selector import VersionSelector
-from .components.mod_list_panel import ModListPanel
-from .components.progress_panel import ProgressPanel
+from src.ui.styles import configure_styles, Colors, Spacing
+from src.ui.components.llm_config_panel import LLMConfigPanel
+from src.ui.components.version_selector import VersionSelector
+from src.ui.components.mod_list_panel import ModListPanel
+from src.ui.components.progress_panel import ProgressPanel
 
-from ..config.constants import WINDOW_TITLE, WINDOW_SIZE, MIN_WINDOW_SIZE, RESULT_PACK_DIR
-from ..core.translator import create_translator
-from ..core.jar_extractor import extract_language_files, extract_mod_info, has_korean_translation
-from ..core.cache_manager import CacheManager
-from ..core.resource_pack_builder import build_resource_pack
-from ..models.translation_data import TranslationResult, TranslationProgress
-from ..utils.logger import setup_logging, get_logger
-from ..utils.file_manager import ensure_directories
+from src.config.constants import WINDOW_TITLE, WINDOW_SIZE, MIN_WINDOW_SIZE, RESULT_PACK_DIR
+from src.core.translator import create_translator
+from src.core.jar_extractor import extract_language_files, extract_mod_info, has_korean_translation
+from src.core.cache_manager import CacheManager
+from src.core.resource_pack_builder import build_resource_pack
+from src.models.translation_data import TranslationResult, TranslationProgress
+from src.utils.logger import setup_logging, get_logger
+from src.utils.file_manager import ensure_directories
 
 logger = get_logger(__name__)
 
