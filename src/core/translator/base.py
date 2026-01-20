@@ -18,7 +18,7 @@ class BaseTranslator(ABC):
     memory usage for local LLMs with limited VRAM.
     """
     
-    # Single, comprehensive system prompt for consistent translation
+    # Detailed system prompt for cloud APIs (OpenAI, OpenRouter)
     SYSTEM_PROMPT = """You are a professional game translator specializing in Minecraft.
 
 TASK: Translate the JSON values into Korean. Keep all JSON keys unchanged.
@@ -40,6 +40,18 @@ EXAMPLE OUTPUT:
 {"item.sword": "철 검", "tooltip.durability": "%d/%d 내구도", "message.error": "시스템 오류"}
 
 RESPOND WITH ONLY THE TRANSLATED JSON. No explanations, no markdown code blocks."""
+    
+    # Simple system prompt for local LLMs (Ollama) - optimized for smaller models
+    SIMPLE_SYSTEM_PROMPT = """Translate JSON values to Korean. Keep keys unchanged.
+
+Rules:
+- Translate values only, keep keys as-is
+- Keep: %s, %d, §a, §b, {item}, <b> etc.
+
+Input: {"item.sword": "Iron Sword"}
+Output: {"item.sword": "철 검"}
+
+Return JSON only."""
     
     # Default batch size (number of entries per batch)
     DEFAULT_BATCH_SIZE = 50
@@ -84,9 +96,21 @@ RESPOND WITH ONLY THE TRANSLATED JSON. No explanations, no markdown code blocks.
         """Return the model name being used."""
         return self._model
     
+    def get_system_prompt(self) -> str:
+        """
+        Get the system prompt for translation.
+        
+        Subclasses can override this to use a different prompt.
+        Local LLMs should override to return SIMPLE_SYSTEM_PROMPT.
+        
+        Returns:
+            System prompt string
+        """
+        return self.SYSTEM_PROMPT
+    
     def _build_system_messages(self) -> list[dict]:
         """Build system message list for API calls."""
-        return [{"role": "system", "content": self.SYSTEM_PROMPT}]
+        return [{"role": "system", "content": self.get_system_prompt()}]
     
     def _parse_json_response(self, response: str) -> Dict[str, Any]:
         """

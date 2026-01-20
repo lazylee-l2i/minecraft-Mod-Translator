@@ -37,6 +37,18 @@ class OllamaTranslator(BaseTranslator):
         super().__init__(api_key="", model=model)
         self._server_url = (server_url or self.DEFAULT_SERVER_URL).rstrip("/")
     
+    def get_system_prompt(self) -> str:
+        """
+        Get simplified system prompt for local LLMs.
+        
+        Local LLMs have limited capacity, so we use a simpler prompt
+        that's easier to understand and follow.
+        
+        Returns:
+            Simple system prompt string
+        """
+        return self.SIMPLE_SYSTEM_PROMPT
+    
     def translate(self, content: Dict[str, Any]) -> Dict[str, Any]:
         """
         Translate using Ollama.
@@ -55,8 +67,8 @@ class OllamaTranslator(BaseTranslator):
             # Check if Ollama server is running
             self._check_server_connection()
             
-            # Build prompt
-            system_prompt = "\n".join(self.SYSTEM_PROMPTS)
+            # Build prompt - use simplified prompt for local LLMs
+            system_prompt = self.get_system_prompt()
             user_content = json.dumps(content, ensure_ascii=False, indent=2)
             
             # Make request
@@ -64,7 +76,7 @@ class OllamaTranslator(BaseTranslator):
                 f"{self._server_url}/api/generate",
                 json={
                     "model": self._model,
-                    "prompt": f"{system_prompt}\n\n사용자 입력:\n{user_content}",
+                    "prompt": f"{system_prompt}\n\n입력:\n{user_content}",
                     "stream": False,
                     "format": "json",
                     "options": {
